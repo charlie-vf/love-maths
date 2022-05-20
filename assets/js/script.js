@@ -32,6 +32,8 @@ function runGame(gameType) {
         displayAdditionQuestion(num1, num2);
     } else if (gameType === 'multiply') {
         displayMultiplyQuestion(num1, num2);
+    } else if (gameType === 'subtract') {
+        displaySubtractQuestion(num1, num2);
     } else {
         alert(`Unknown game type: ${gameType}`);
         throw `Unknown game type: ${gameType}. Aborting!`;
@@ -70,6 +72,7 @@ function checkAnswer() {
  * directly from the DOM, and returns the correct answer
  */
 function calculateCorrectAnswer() {
+    
     // parseInt ensures we get a whole number, rather than the default string
     let operand1 = parseInt(document.getElementById('operand1').innerText);
     let operand2 = parseInt(document.getElementById('operand2').innerText);
@@ -80,7 +83,9 @@ function calculateCorrectAnswer() {
     if (operator === '+') {
         return [operand1 + operand2, 'addition'];
     } else if (operator === 'x') {
-            return [operand1 * operand2, 'multiply']
+        return [operand1 * operand2, 'multiply'];
+    } else if (operator === '-') {
+        return [operand1 - operand2, 'subtract'];
     } else {
             alert(`Unimplemented operator ${operator}`);
             throw `Unimplemented operator ${operator}. Aborting!`;
@@ -91,6 +96,7 @@ function calculateCorrectAnswer() {
  * Gets the current score from the DOM and increments it by 1
  */
 function incrementScore() {
+    
     let oldScore = parseInt(document.getElementById('score').innerText);
     // now we've retrieved the score and put it in the variable oldScore
     // we write it back to the DOM - setting the score inner text to the new score
@@ -105,21 +111,33 @@ function incrementScore() {
  * Gets the current tally of incorrect answers from the DOM and increments it by 1
  */
 function incrementWrongAnswer() {
+    
     let oldScore = parseInt(document.getElementById('incorrect').innerText);
     document.getElementById('incorrect').innerText = ++oldScore;
 }
 
 function displayAdditionQuestion(operand1, operand2) {
+    
     document.getElementById("operand1").textContent = operand1;
     document.getElementById("operand2").textContent = operand2;
     document.getElementById("operator").textContent = "+";
 }
 
-function displaySubtractQuestion() {
-
+function displaySubtractQuestion(operand1, operand2) {
+    
+    // this is a ternary operator - could've used an if statement
+    // the bit before the question mark asks if operand1 is bigger than operand2?
+    // if it is - return operand1 (put operand1 first in the question)
+    // if it isn't - the bit after the colon is the else statement so return operand2
+    document.getElementById('operand1').textContent = operand1 > operand2 ? operand1 : operand2; 
+    // if operand1 is larger then we want to display operand2 as the second number (the if side of the statement)
+    // if it isn't, display operand1 as the second number (the else side of the statement)
+    document.getElementById('operand2').textContent = operand1 > operand2 ? operand2 : operand1; 
+    document.getElementById("operator").textContent = "-";
 }
 
 function displayMultiplyQuestion(operand1, operand2) {
+    
     document.getElementById("operand1").textContent = operand1;
     document.getElementById("operand2").textContent = operand2;
     // the standard computer symbol for multiplication is *, but x
