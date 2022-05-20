@@ -14,6 +14,17 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         })
     }
+    // Allows user to submit answers by pressing 'enter' rather than clicking submit
+    // adds event listener of a key press
+    document.getElementById('answer-box').addEventListener('keydown', function(event) {
+        // Every event generates an object which we're passing in the function() to our handler
+        // If the key that was pressed is 'enter' - run the checkAnswer function
+        // Key method is a useful way of determining key presses and making website keyboard controlled
+        if (event.key === 'Enter') {
+            checkAnswer();
+        }
+    })
+
 
     runGame("addition");
 })
@@ -23,6 +34,13 @@ document.addEventListener("DOMContentLoaded", function() {
  * and after the user's answer has been processed
  */
 function runGame(gameType) {
+
+    // Sets answer box value to an empty string
+    // aka, every time the runGame function is called it will empty the answer box
+    document.getElementById('answer-box').value = "";
+    // Each time the runGame function is called, the answer-box will gain focus
+    // aka, you can immediately type an answer without having to click on the box
+    document.getElementById('answer-box').focus();
 
     // Creates two random numbers between 1 and 25
     let num1 = Math.floor(Math.random() * 25) + 1;
