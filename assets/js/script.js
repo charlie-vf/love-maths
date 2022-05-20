@@ -51,9 +51,13 @@ function checkAnswer() {
     let isCorrect = userAnswer === calculatedAnswer[0];
 
     if (isCorrect) {
-        alert('Hey! You got it right!')
+        alert('Hey! You got it right!');
+        // tells checkAnswer function to call incrementScore function if answer is correct
+        incrementScore();
     } else {
-        alert(`You answered ${userAnswer} but the answer was ${calculatedAnswer[0]}.`)
+        alert(`You answered ${userAnswer} but the answer was ${calculatedAnswer[0]}.`);
+        // tells checkAnswer to call incrementWrongAnswer function if answer is incorrect
+        incrementWrongAnswer();
     }
 
     // run another game of the same type
@@ -79,12 +83,26 @@ function calculateCorrectAnswer() {
         }
     }
 
+/**
+ * Gets the current score from the DOM and increments it by 1
+ */
 function incrementScore() {
-
+    let oldScore = parseInt(document.getElementById('score').innerText);
+    // now we've retrieved the score and put it in the variable oldScore
+    // we write it back to the DOM - setting the score inner text to the new score
+    // ++ is a compound addition operator - could've used oldScore + 1
+    // if the ++ was after the variable, javaScript would get the ID of score, set the
+    // inner text to oldScore and /then/ add one, so we wouldn't see the score being
+    // updated as it would be written back to the DOM before being updated
+    document.getElementById('score').innerText = ++oldScore;
 }
 
+/**
+ * Gets the current tally of incorrect answers from the DOM and increments it by 1
+ */
 function incrementWrongAnswer() {
-
+    let oldScore = parseInt(document.getElementById('incorrect').innerText);
+    document.getElementById('incorrect').innerText = ++oldScore;
 }
 
 function displayAdditionQuestion(operand1, operand2) {
